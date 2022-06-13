@@ -1,0 +1,106 @@
+#include <iostream>
+#define maxi 1000
+
+using namespace std;
+
+template <class T>
+class sstack
+{
+    T a[maxi];
+    int top;
+
+public:
+    sstack();
+    void push(T val);
+    void pop();
+    T peep();
+    bool isempty();
+    void display();
+};
+
+template <class T>
+sstack<T>::sstack()
+{
+    top = -1;
+}
+
+template <class T>
+void sstack<T>::push(T val)
+{
+    if (top == maxi - 1)
+    {
+        cout << "\nThe Stack is already full...";
+    }
+    a[++top] = val;
+}
+
+template <class T>
+void sstack<T>::pop()
+{
+    if (top != -1)
+        top--;
+}
+
+template <class T>
+T sstack<T>::peep()
+{
+    if (top != -1)
+        return a[top];
+}
+
+template <class T>
+bool sstack<T>::isempty()
+{
+    if (top == -1)
+        return true;
+    else
+        return false;
+}
+
+template <class T>
+void sstack<T>::display()
+{
+    if (top != -1)
+    {
+        cout << "\nThe Contents of the Stack is..";
+        int x = top;
+        while (x != -1)
+        {
+            cout << a[x] << " ";
+            x--;
+        }
+    }
+}
+
+int main()
+{
+    sstack<char> s;
+    string a;
+    cout << "Enter any expression..";
+    cin >> a;
+    int i;
+    for (i = 0; i < a.length(); i++)
+    {
+        if (s.isempty())
+        {
+            s.push(a[i]);
+        }
+        else if ((s.peep() == '(' && a[i] == ')') || (s.peep() == '{' && a[i] == '}') || (s.peep() == '[' && a[i] == ']') || (s.peep() == '<' && a[i] == '>'))
+        {
+            s.pop();
+        }
+        else
+        {
+            s.push(a[i]);
+        }
+    }
+    if (s.isempty())
+    {
+        cout << "The Expression is Valid.";
+    }
+    else
+    {
+        cout << "The Expression is not Valid.";
+    }
+    return 0;
+}
